@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import App from './App'
+import game from './pages/game/home.vue'
+
+Vue.component('game',game)
 
 Vue.config.productionTip = false
 

@@ -42,9 +42,13 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx9542733be2882406",
         "setting" : {
             "urlCheck" : true
         }
+    },
+    "h5" : {
+        "title" : "game-center",
+        "domain" : "localhost"
     }
 }
