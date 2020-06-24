@@ -48,7 +48,9 @@
         }
     },
     "h5" : {
-        "title" : "game-center",
-        "domain" : "localhost"
+        "title" : "游戏中心",
+        "router" : {
+            "mode" : "hash"
+        }
     }
 }
