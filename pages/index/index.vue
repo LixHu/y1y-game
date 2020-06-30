@@ -2,8 +2,9 @@
 	<view>
 		<view style="padding-bottom: 100rpx;">
 			<game v-if="PageCur=='game'"></game>
-			<!-- <components v-if="PageCur=='component'"></components>
-			<plugin v-if="PageCur=='plugin'"></plugin> -->
+			<gift v-if="PageCur=='gift'"></gift>
+			<my v-if="PageCur=='my'"></my>
+			<service v-if="PageCur=='service'"></service>
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="game">
