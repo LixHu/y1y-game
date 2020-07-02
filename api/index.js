@@ -1,6 +1,6 @@
 import GameApi from './game/index.js'
 
-const url = 'http://fx.com';
+const url = '';
 const Api = {
 	game: new GameApi(url)
 }

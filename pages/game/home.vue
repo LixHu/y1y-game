@@ -63,7 +63,7 @@
 		</view>
 		<view class="bg-white padding">
 			<view class="grid col-4 grid-square">
-				<view v-for="(item,index) in rencentGame" :key="index" class="game-icon" v-if="item.game">
+				<view v-for="(item,index) in rencentGame" :key="index" class="game-icon" v-if="item.game" @click="goGameInfo(item.id)">
 					<image :src="item.game.icon" class="game-prefix" />
 					<text >{{item.game.game_name}}</text>
 				</view>
@@ -80,7 +80,7 @@
 		</view>
 		<view class="bg-white padding">
 			<view class="grid col-4 grid-square">
-				<view v-for="(item,index) in hotGame" :key="index" class="game-icon">
+				<view v-for="(item,index) in hotGame" :key="index" class="game-icon" @click="goGameInfo(item.id)">
 					<image :src="item.icon" class="game-prefix" />
 					{{ item.game_name }}
 				</view>
@@ -97,7 +97,7 @@
 		</view>
 		<view class="bg-white padding">
 			<view class="grid col-4 grid-square">
-				<view v-for="(item,index) in newGame" :key="index" class="game-icon">
+				<view v-for="(item,index) in newGame" :key="index" class="game-icon" @click="goGameInfo(item.id)">
 					<image :src="item.icon" class="game-prefix" />
 					{{ item.game_name }}
 				</view>
@@ -224,8 +224,13 @@
 	}
 	.game-icon {
 		text-align: center;
-		overflow: hidden !important;
-		height: 180rpx !important;
+		height: 190rpx !important;
+	}
+	
+	.game-icon  > text{
+		margin-top: 10rpx;
+		text-align: center;
+		
 	}
 	.game-prefix {
 		width: 140rpx;
