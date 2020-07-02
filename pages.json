@@ -41,7 +41,7 @@
 			"style": {}
 		},
 		{
-			"path":"pages/game/searchRes",
+			"path":"pages/game/gameList",
 			"style": {
 				"app-plus": {
 					"titleNView": {  

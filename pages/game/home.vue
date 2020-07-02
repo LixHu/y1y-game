@@ -1,5 +1,5 @@
 <template>
-	<view class="container bg-wh">
+	<view class="container">
 		<view class="cu-bar bg-white grid col-2 logo-content">
 			<view>
 				<view class="logo"></view>
@@ -10,9 +10,9 @@
 			</view>
 		</view>
 		<!-- 轮播图部分 -->
-		<view>
-			<swiper class="card-swiper" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
-			 :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
+		<view class="bg-white">
+			<swiper class="card-swiper" :class="dotStyle?'square-dot':'round-dot'" :circular="true"
+			 :autoplay="true" interval="5000" duration="500" @change="cardSwiper" :indicator-dots="true" indicator-color="#8799a3"
 			 indicator-active-color="#0081ff">
 				<swiper-item v-for="(item,index) in bannerList" :key="index" :class="cardCur==index?'cur':''">
 					<view class="swiper-item" @click="goGameInfo(item.id)">
@@ -22,7 +22,7 @@
 			</swiper>
 		</view>
 		<!-- 导航部分 -->
-		<view class="index-navigate">
+		<view class="index-navigate bg-white">
 			<view class="grid col-4 navigate-btns">
 				<view class="navigate-btn" @click="goGift()">
 					<view style="background-image: url(../../static/index/2.png);"></view>
@@ -78,11 +78,13 @@
 				<!-- <text class="cuIcon-more"></text> -->
 			</view>
 		</view>
-		<view class="bg-white padding">
+		<view class="bg-white padding-30">
 			<view class="grid col-4 grid-square">
 				<view v-for="(item,index) in rencentGame" :key="index" class="game-icon" v-if="item.game" @click="goGameInfo(item.id)">
 					<image :src="item.game.icon" class="game-prefix" />
-					<text >{{item.game.game_name}}</text>
+					<view>
+						<text>{{ item.game.game_name }}</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -91,15 +93,17 @@
 			<view class="action card-title">
 				热门推荐
 			</view>
-			<view class="action">
+			<view class="action" @click="goGameList('hot')">
 				<text class="cuIcon-more"></text>
 			</view>
 		</view>
-		<view class="bg-white padding">
+		<view class="bg-white padding-30">
 			<view class="grid col-4 grid-square">
 				<view v-for="(item,index) in hotGame" :key="index" class="game-icon" @click="goGameInfo(item.id)">
 					<image :src="item.icon" class="game-prefix" />
-					{{ item.game_name }}
+					<view>
+						<text>{{ item.game_name }}</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -112,11 +116,13 @@
 				<text class="cuIcon-more"></text>
 			</view>
 		</view>
-		<view class="bg-white padding">
+		<view class="bg-white padding-30">
 			<view class="grid col-4 grid-square">
 				<view v-for="(item,index) in newGame" :key="index" class="game-icon" @click="goGameInfo(item.id)">
 					<image :src="item.icon" class="game-prefix" />
-					{{ item.game_name }}
+					<view>
+						<text>{{ item.game_name }}</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -137,7 +143,7 @@
 	import notice from '../../components/notice.vue'
 	export default {
 		components: {
-			Notice: notice
+			Notice: notice,
 		},
 		onLoad() {
 			this.getBannerList()
@@ -155,7 +161,8 @@
 				newGame: [],
 				noticeList: [],
 				TabCur: 0,
-				dotStyle: false
+				dotStyle: false,
+				mode: 'round',
 			}
 		},
 		methods: {
@@ -246,9 +253,17 @@
 			searchGame(e) {
 				let keyword = e.target.value
 				uni.navigateTo({
-					url: `searchRes?keyword=${keyword}`,
+					url: `gameList?keyword=${keyword}`,
 					success: () => {
 						console.log('我去搜索了')
+					}
+				})
+			},
+			goGameList(type) {
+				uni.navigateTo({
+					url: `gameList?type=${type}`,
+					success: () => {
+						console.log('去游戏列表')
 					}
 				})
 			}
@@ -274,21 +289,6 @@
 		/* background-color: #FFF; */
 		/* padding: 20rpx 0; */
 	}
-	.game-icon {
-		text-align: center;
-		height: 190rpx !important;
-	}
-	
-	.game-icon  > text{
-		margin-top: 10rpx;
-		text-align: center;
-		
-	}
-	.game-prefix {
-		width: 140rpx;
-		height: 140rpx;
-	}
-	
 	.rank-info {
 		margin-top: 10rpx;
 		height: 70rpx;
@@ -302,18 +302,32 @@
 	}
 	
 	.index-navigate {
-		
+		margin: 0 auto;
+		padding: 10rpx 100rpx 0 100rpx;
 	}
 	
+	.game-icon {
+		text-align: center;
+	}
+	.game-prefix {
+		width: 100rpx;
+		height: 100rpx;
+	}
+	
+	.navigate-btns {
+		margin-top: 20rpx;
+	}
 	.navigate-btn {
 		width: 100%;
-		height: 140rpx;
+		height: 120rpx;
 	}
-	
+	.padding-30 {
+		padding: 0 30rpx;
+	}
 	.navigate-btn > view {
 		margin: 0 auto;
-		width: 70%;
-		height: 70%;
+		width: 75%;
+		height: 75%;
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 	}

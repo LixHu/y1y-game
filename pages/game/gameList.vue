@@ -11,13 +11,23 @@
 			GameList: GameList
 		},
 		onLoad(option) {
-			this.keyword = option.keyword
-			this.getSearchRes()
+			let keyword = option.keyword
+			let type = option.type
+			if(keyword) {
+				this.keyword = keyword
+				this.getSearchRes()
+			}
+			if(type) {
+				this.type = type
+				this.getGameList(type)
+			}
 		},
 		data() {
 			return {
 				searchGameList: [],
-				keyword: ''
+				keyword: '',
+				page: 1,
+				pageSize: 10
 			}
 		},
 		methods: {
@@ -33,6 +43,12 @@
 					}
 				})
 			},
+			getGameList(type) {
+				this.$api.game.getListGame(type, this.page, this.pageSize).then((res) => {
+					console.log(res)
+					this.searchGameList = res.data
+				})
+			}
 		}
 	}
 </script>
