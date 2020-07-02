@@ -1,28 +1,28 @@
 <template>
 	<view class="container">
-		<view class="cu-bar bg-white grid col-2" >
-			<view class="logo">
-				
+		<view class="cu-bar bg-white grid col-2 logo-content">
+			<view>
+				<view class="logo"></view>
 			</view>
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
 				<input type="text" placeholder="搜索想要玩的游戏" confirm-type="search"></input>
 			</view>
 		</view>
+		<!-- 轮播图部分 -->
 		<view>
 			<swiper class="card-swiper" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
 			 :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
 			 indicator-active-color="#0081ff">
-				<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
-					<view class="swiper-item">
-						<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-						<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
+				<swiper-item v-for="(item,index) in bannerList" :key="index" :class="cardCur==index?'cur':''">
+					<view class="swiper-item" @click="goGameInfo(item.id)">
+						<view :style="{ backgroundImage: `url(${item.cover})` }" mode="aspectFill" class="banner-icon"></view>
 					</view>
 				</swiper-item>
 			</swiper>
 		</view>
-		
-		<view class="grid col-1" style="text-align: center;">
+		<!-- 排行榜 -->
+		<!-- <view class="grid col-1" style="text-align: center;">
 			<view class="rank-text">
 				<text>排行榜<text class="text-gray">date</text></text>
 			</view>
@@ -51,9 +51,8 @@
 					</view>
 				</view>
 			</view>
-		</view>
-		
-		
+		</view> -->
+		<!-- 最近在玩 -->
 		<view class="cu-bar bg-white  margin-top solid-bottom">
 			<view class="action card-title">
 				最近在玩
@@ -64,12 +63,13 @@
 		</view>
 		<view class="bg-white padding">
 			<view class="grid col-4 grid-square">
-				<view v-for="(item,index) in avatar" :key="index" class="game-icon">
-					<image :src="avatar[index]" class="game-prefix" />
-					1223
+				<view v-for="(item,index) in rencentGame" :key="index" class="game-icon" v-if="item.game">
+					<image :src="item.game.icon" class="game-prefix" />
+					<text >{{item.game.game_name}}</text>
 				</view>
 			</view>
 		</view>
+		<!-- 热门推荐 -->
 		<view class="cu-bar bg-white  margin-top solid-bottom">
 			<view class="action card-title">
 				热门推荐
@@ -80,12 +80,13 @@
 		</view>
 		<view class="bg-white padding">
 			<view class="grid col-4 grid-square">
-				<view v-for="(item,index) in avatar" :key="index" class="game-icon">
-					<image :src="avatar[index]" class="game-prefix" />
-					1223
+				<view v-for="(item,index) in hotGame" :key="index" class="game-icon">
+					<image :src="item.icon" class="game-prefix" />
+					{{ item.game_name }}
 				</view>
 			</view>
 		</view>
+		<!-- 最新 -->
 		<view class="cu-bar bg-white  margin-top solid-bottom">
 			<view class="action card-title">
 				最新上架
@@ -96,12 +97,13 @@
 		</view>
 		<view class="bg-white padding">
 			<view class="grid col-4 grid-square">
-				<view v-for="(item,index) in avatar" :key="index" class="game-icon">
-					<image :src="avatar[index]" class="game-prefix" />
-					1223
+				<view v-for="(item,index) in newGame" :key="index" class="game-icon">
+					<image :src="item.icon" class="game-prefix" />
+					{{ item.game_name }}
 				</view>
 			</view>
 		</view>
+		<!-- 公告 -->
 		<view class="cu-bar bg-white  margin-top solid-bottom">
 			<view class="action card-title">
 				活动公告
@@ -110,59 +112,31 @@
 				<text class="cuIcon-more"></text>
 			</view>
 		</view>
-		<view class="cu-list menu">
-			<view class="cu-item arrow">
-				<navigator class="content" hover-class="none" url="gift/index" open-type="redirect">
-					<text class="cu-tag bg-red radius">公告</text>
-					<text class="text-grey" style="margin-left: 8rpx;">传奇公告传奇公告传奇公告传奇公告</text>
-				</navigator>
-			</view>
-		</view>
+		<Notice :list="noticeList" />
 	</view>
 </template>
 
 <script>
+	import notice from '../../components/notice.vue'
 	export default {
+		components: {
+			Notice: notice
+		},
+		onLoad() {
+			this.getBannerList()
+			this.getRencentGame()
+			this.getGameList('hot')
+			this.getGameList('new')
+			this.getNotice()
+		},
 		data() {
 			return {
 				cardCur: 0,
-				swiperList: [
-					{
-						id: 0,
-						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-					}, {
-						id: 1,
-						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg',
-					}, {
-						id: 2,
-						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-					}, {
-						id: 3,
-						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-					}, {
-						id: 4,
-						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-					}, {
-						id: 5,
-						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-					}, {
-						id: 6,
-						type: 'image',
-						url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-					},
-				],
-				avatar:[
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg',
-					],
+				bannerList: [],
+				rencentGame:[],
+				hotGame: [],
+				newGame: [],
+				noticeList: [],
 				TabCur: 0,
 				dotStyle: false
 			}
@@ -174,16 +148,70 @@
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
-			}
+			},
+			getBannerList() {
+				this.$api.game.getBannerList().then((res) => {
+					if(res.status === 1001) {
+						this.bannerList = res.data
+					}else {
+						uni.showToast({
+							title: '网络连接失败',
+							icon: 'none'
+						})
+					}
+				})
+			},
+			getRencentGame() {
+				this.$api.game.getRencentGame().then((res) => {
+					if(res.data.status == 1001) {
+						this.rencentGame = res.data.data
+					}
+				})
+			},
+			getGameList(type) {
+				this.$api.game.getListGame(type, 1, 12).then((res) => {
+					if(res.status === 1001) {
+						switch(type) {
+							case 'hot': 
+								this.hotGame = res.data
+								break;
+							case 'new': 
+								this.newGame = res.data
+								break;
+							default: 
+								this.gameList = res.data
+								break
+						}
+					}
+				})
+			},
+			getNotice() {
+				this.$api.game.getNotice().then((res) => {
+					if(res.status == 1001) {
+						this.noticeList = res.data.placard
+					}
+				})
+			},
+			goGameInfo(id) {
+				uni.navigateTo({
+					url: `game_info?gameId=${id}`,
+					success: () => {
+						console.log('跳转到游戏详情')
+					}
+				})
+			},
 		}
 	}
 </script>
 
 <style>
 	.logo {
-		background-color: red;
-		width: 100%;
+		width: 80%;
 		height: 100rpx;
+		background-image: url('https://y1y-game.oss-cn-shanghai.aliyuncs.com/logo.png');
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+		margin-left: 20rpx;
 	}
 	
 	.card-title {
@@ -197,16 +225,22 @@
 	.game-icon {
 		text-align: center;
 		overflow: hidden !important;
-		height: 200rpx !important;
+		height: 180rpx !important;
 	}
 	.game-prefix {
-		width: 160rpx;
-		height: 160rpx;
+		width: 140rpx;
+		height: 140rpx;
 	}
 	
 	.rank-info {
 		margin-top: 10rpx;
 		height: 70rpx;
 		overflow: auto;
+	}
+	
+	.banner-icon {
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
 	}
 </style>

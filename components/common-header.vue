@@ -25,7 +25,9 @@
 	.header-content {
 		width: 100%;
 		height: 280rpx;
-		background-color: #FFFFFF;
+		background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/common-bg.jpeg);
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
 		display: flex;
 	}
 	
