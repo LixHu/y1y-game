@@ -63,8 +63,30 @@ export default class GameApi {
 			})
 		})
 	}
-	
-	
+	// 领取礼包
+	receiveGift(id) {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=getGiftbag&id=${id}`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
+	}
+	// 获取搜索结果 http://docater1.cn/index.php?g=Game&m=GameInterface&a=getSearchRes&keyWord=123
+	getSearchValue(keyword) {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=getSearchRes&keyWord=${keyword}`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
+	}
 	getSearchGame() {
 		
 	}

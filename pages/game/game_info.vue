@@ -41,6 +41,7 @@
 		<view class="game-info-desc">
 			<text>{{ gameInfo.developer }}</text>
 		</view>
+		
 	</view>
 </template>
 
@@ -63,8 +64,8 @@
 					{ key: 0, title: '礼包' },
 					{ key: 1, title: '资讯' },
 				],
-				giftList: 6,
-				noticeList: 6,
+				giftList: [],
+				noticeList: [],
 				gameId: '',
 				gameInfo: {},
 			}
@@ -74,13 +75,12 @@
 				this.TabCur = id;
 			},
 			getGameInfo() {
-				
 				this.$api.game.getGameInfo(this.gameId).then((res) => {
 					if(res.status === 1001) {
 						this.gameInfo = res.data
+						this.giftList = res.data.gift
 					}else {
-						
-						uni.navigateBack()
+						// uni.navigateBack()
 					}
 				})
 			},

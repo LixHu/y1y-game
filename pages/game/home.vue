@@ -1,12 +1,12 @@
 <template>
-	<view class="container">
+	<view class="container bg-wh">
 		<view class="cu-bar bg-white grid col-2 logo-content">
 			<view>
 				<view class="logo"></view>
 			</view>
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input type="text" placeholder="搜索想要玩的游戏" confirm-type="search"></input>
+				<input type="text" @confirm="searchGame" placeholder="搜索想要玩的游戏" confirm-type="search"></input>
 			</view>
 		</view>
 		<!-- 轮播图部分 -->
@@ -20,6 +20,23 @@
 					</view>
 				</swiper-item>
 			</swiper>
+		</view>
+		<!-- 导航部分 -->
+		<view class="index-navigate">
+			<view class="grid col-4 navigate-btns">
+				<view class="navigate-btn" @click="goGift()">
+					<view style="background-image: url(../../static/index/2.png);"></view>
+				</view>
+				<view class="navigate-btn" @click="goShop()">
+					<view style="background-image: url(../../static/index/3.png);"></view>
+				</view>
+				<view class="navigate-btn" @click="showNotCan()">
+					<view style="background-image: url(../../static/index/4.png);"></view>
+				</view>
+				<view class="navigate-btn" @click="showNotCan()">
+					<view style="background-image: url(../../static/index/1.png);"></view>
+				</view>
+			</view>
 		</view>
 		<!-- 排行榜 -->
 		<!-- <view class="grid col-1" style="text-align: center;">
@@ -58,7 +75,7 @@
 				最近在玩
 			</view>
 			<view class="action">
-				<text class="cuIcon-more"></text>
+				<!-- <text class="cuIcon-more"></text> -->
 			</view>
 		</view>
 		<view class="bg-white padding">
@@ -200,6 +217,41 @@
 					}
 				})
 			},
+			goGift() {
+				uni.switchTab({
+					url: "../gift/index",
+					success: () => {
+						console.log('跳转到福利')
+					}
+				})
+			},
+			goShop() {
+				uni.switchTab({
+					url: "../gift/index",
+					success: () => {
+						console.log('跳转到商城')
+					},
+					fail: (e) => {
+						console.log('没跳',e)
+					}
+				})
+			},
+			showNotCan() {
+				
+				uni.showToast({
+					title: '功能暂未开放',
+					icon: 'none'
+				})
+			},
+			searchGame(e) {
+				let keyword = e.target.value
+				uni.navigateTo({
+					url: `searchRes?keyword=${keyword}`,
+					success: () => {
+						console.log('我去搜索了')
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -247,5 +299,22 @@
 		width: 100%;
 		height: 100%;
 		background-size: 100% 100%;
+	}
+	
+	.index-navigate {
+		
+	}
+	
+	.navigate-btn {
+		width: 100%;
+		height: 140rpx;
+	}
+	
+	.navigate-btn > view {
+		margin: 0 auto;
+		width: 70%;
+		height: 70%;
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
 	}
 </style>
