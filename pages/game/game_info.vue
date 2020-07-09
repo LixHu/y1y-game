@@ -85,7 +85,7 @@
 				})
 			},
 			goGame() {
-				window.location.href = `https://docater1.cn/Wap/App/game_new?channel=${ this.gameInfo.str }`
+				window.location.href = `${this.$url}/Wap/App/game_new?channel=${ this.gameInfo.str }`
 				// uni.navigateTo({
 				// 	url: `playGame?channel=${ this.gameInfo.str }`,
 				// 	success() {

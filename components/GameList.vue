@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view :scroll-y="true" @scrolltolower="onScroll" class="scroll-height">
 		<view class="cu-list menu-avatar" v-for="(item, index) in list" :key="index">
 			<view class="cu-item">
 				<view class="cu-avatar radius lg" :style="{backgroundImage: `url(${item.icon})`}"></view>
@@ -44,5 +44,4 @@
 </script>
 
 <style>
-
 </style>

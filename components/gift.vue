@@ -61,6 +61,10 @@
 						this.showModel = false
 					}
 				})
+			},
+			
+			hideModal() {
+				this.showModel = false
 			}
 		}
 	}

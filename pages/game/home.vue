@@ -25,16 +25,16 @@
 		<view class="index-navigate bg-white">
 			<view class="grid col-4 navigate-btns">
 				<view class="navigate-btn" @click="goGift()">
-					<view style="background-image: url(../../static/index/2.png);"></view>
+					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-2.png);"></view>
 				</view>
 				<view class="navigate-btn" @click="goShop()">
-					<view style="background-image: url(../../static/index/3.png);"></view>
+					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-3.png);"></view>
 				</view>
 				<view class="navigate-btn" @click="showNotCan()">
-					<view style="background-image: url(../../static/index/4.png);"></view>
+					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-4.png);"></view>
 				</view>
 				<view class="navigate-btn" @click="showNotCan()">
-					<view style="background-image: url(../../static/index/1.png);"></view>
+					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-1.png);"></view>
 				</view>
 			</view>
 		</view>
@@ -82,7 +82,7 @@
 			<view class="grid col-4 grid-square">
 				<view v-for="(item,index) in rencentGame" :key="index" class="game-icon" v-if="item.game" @click="goGameInfo(item.id)">
 					<image :src="item.game.icon" class="game-prefix" />
-					<view>
+					<view class="game-text">
 						<text>{{ item.game.game_name }}</text>
 					</view>
 				</view>
@@ -101,7 +101,7 @@
 			<view class="grid col-4 grid-square">
 				<view v-for="(item,index) in hotGame" :key="index" class="game-icon" @click="goGameInfo(item.id)">
 					<image :src="item.icon" class="game-prefix" />
-					<view>
+					<view class="game-text">
 						<text>{{ item.game_name }}</text>
 					</view>
 				</view>
@@ -112,7 +112,7 @@
 			<view class="action card-title">
 				最新上架
 			</view>
-			<view class="action">
+			<view class="action" @click="goGameList('new')">
 				<text class="cuIcon-more"></text>
 			</view>
 		</view>
@@ -120,7 +120,7 @@
 			<view class="grid col-4 grid-square">
 				<view v-for="(item,index) in newGame" :key="index" class="game-icon" @click="goGameInfo(item.id)">
 					<image :src="item.icon" class="game-prefix" />
-					<view>
+					<view class="game-text">
 						<text>{{ item.game_name }}</text>
 					</view>
 				</view>
@@ -131,7 +131,7 @@
 			<view class="action card-title">
 				活动公告
 			</view>
-			<view class="action">
+			<view class="action" @click="goNoticeList">
 				<text class="cuIcon-more"></text>
 			</view>
 		</view>
@@ -233,8 +233,8 @@
 				})
 			},
 			goShop() {
-				uni.switchTab({
-					url: "../gift/index",
+				uni.navigateTo({
+					url: "../gift/shop",
 					success: () => {
 						console.log('跳转到商城')
 					},
@@ -264,6 +264,14 @@
 					url: `gameList?type=${type}`,
 					success: () => {
 						console.log('去游戏列表')
+					}
+				})
+			},
+			goNoticeList() {
+				uni.navigateTo({
+					url: `../notice/noticeList`,
+					complete: (e) => {
+						console.log(e)
 					}
 				})
 			}
@@ -327,8 +335,14 @@
 	.navigate-btn > view {
 		margin: 0 auto;
 		width: 75%;
-		height: 75%;
+		height: 78%;
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
+	}
+	
+	.game-text > text {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 </style>

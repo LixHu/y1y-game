@@ -1,6 +1,8 @@
 <template>
 	<view class="padding-sm bg-white">
-		<GameList :list="searchGameList"></GameList>
+		<scroll-view :scroll-y="true" @scrolltolower="onScroll" class="scroll-height">
+			<GameList :list="searchGameList"></GameList>
+		</scroll-view>
 	</view>
 </template>
 
@@ -19,8 +21,17 @@
 			}
 			if(type) {
 				this.type = type
-				this.getGameList(type)
+				this.getGameList()
 			}
+			let title = ''
+			if(type == 'hot') {
+				title = '热门推荐'
+			}else if(type == 'new') {
+				title = '最新上架'
+			}
+			uni.setNavigationBarTitle({
+			    title: title
+			});
 		},
 		data() {
 			return {
@@ -44,14 +55,28 @@
 				})
 			},
 			getGameList(type) {
-				this.$api.game.getListGame(type, this.page, this.pageSize).then((res) => {
-					console.log(res)
-					this.searchGameList = res.data
+				this.$api.game.getListGame(this.type, this.page, this.pageSize).then((res) => {
+					if(res.status === 1001 && res.data) {
+						if(this.searchGameList.length > 0) {
+							let list = this.searchGameList.concat(res.data)
+							this.searchGameList = list
+							console.log(this.searchGameList)
+						}else {
+							this.searchGameList = res.data
+						}
+					}
 				})
+			},
+			onScroll() {
+				this.page += 1
+				this.getGameList()
 			}
 		}
 	}
 </script>
 
 <style>
+	.scroll-height {
+		height: 1200rpx;
+	}
 </style>

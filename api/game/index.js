@@ -75,7 +75,7 @@ export default class GameApi {
 			})
 		})
 	}
-	// 获取搜索结果 http://docater1.cn/index.php?g=Game&m=GameInterface&a=getSearchRes&keyWord=123
+	// 获取搜索结果
 	getSearchValue(keyword) {
 		return new Promise((resolve, reject) => {
 			uni.request({
@@ -87,7 +87,52 @@ export default class GameApi {
 			})
 		})
 	}
-	getSearchGame() {
-		
+	// 获取公告详情
+	getNoticeInfo(id) {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=getNoticeInfo&noticeId=${id}`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
+	}
+	// 礼包列表
+	getGiftList() {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameCenterGift&a=getGiftList`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
+	}
+	// 领取礼包
+	receiveGift(id) {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=exchangeGiftForInteger&id=${id}`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
+	}
+	// 获取二维码配置
+	getQrCode() {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=getAllConfig`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
 	}
 }

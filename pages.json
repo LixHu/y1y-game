@@ -52,7 +52,87 @@
 				}
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/notice/notice",
+            "style": {
+            	"app-plus": {
+            		"titleNView": {  
+            			"backgroundColor": "#FFFFFF",
+            			"titleColor": "#000",
+            			"buttons": []
+            		}
+            	}
+            }
+        },
+		{
+            "path" : "pages/notice/noticeList",
+            "style": {
+            	"app-plus": {
+            		"titleNView": {  
+            			"backgroundColor": "#FFFFFF",
+            			"titleColor": "#000",
+            			"buttons": []
+            		}
+            	}
+            }
+        },
+		{
+		    "path" : "pages/gift/integer",
+		    "style": {
+		    	"app-plus": {
+		    		"titleNView": {  
+		    			"backgroundColor": "#FFFFFF",
+		    			"titleColor": "#000",
+		    			"buttons": []
+		    		}
+		    	}
+		    }
+		},{
+		    "path" : "pages/gift/shop",
+		    "style": {
+		    	"app-plus": {
+		    		"titleNView": {  
+		    			"backgroundColor": "#FFFFFF",
+		    			"titleColor": "#000",
+		    			"buttons": []
+		    		}
+		    	}
+		    }
+		},{
+		    "path" : "pages/my/fcm",
+		    "style": {
+		    	"app-plus": {
+		    		"titleNView": {  
+		    			"backgroundColor": "#FFFFFF",
+		    			"titleColor": "#000",
+		    			"buttons": []
+		    		}
+		    	}
+		    }
+		},{
+		    "path" : "pages/my/fzp",
+		    "style": {
+		    	"app-plus": {
+		    		"titleNView": {  
+		    			"backgroundColor": "#FFFFFF",
+		    			"titleColor": "#000",
+		    			"buttons": []
+		    		}
+		    	}
+		    }
+		},{
+		    "path" : "pages/my/yszc",
+		    "style": {
+		    	"app-plus": {
+		    		"titleNView": {  
+		    			"backgroundColor": "#FFFFFF",
+		    			"titleColor": "#000",
+		    			"buttons": []
+		    		}
+		    	}
+		    }
+		}
+    ],
 	"globalStyle": {
 		"h5": {
 			"titleNView": false

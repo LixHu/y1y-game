@@ -50,7 +50,13 @@
     "h5" : {
         "title" : "游戏中心",
         "router" : {
-            "mode" : "hash"
+            "mode" : "hash",
+            "base" : ""
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
         }
     }
 }
