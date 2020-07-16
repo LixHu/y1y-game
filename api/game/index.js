@@ -18,7 +18,7 @@ export default class GameApi {
 	getRencentGame() {
 		return new Promise((resolve, reject) => {
 			uni.request({
-				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=game_recent`,
+				url: `${this.commonUrl}/index.php?g=Game&m=GameCenterGame&a=getRecentGame`,
 				method: 'GET',
 				success: (res) => {
 					resolve(res)
@@ -39,10 +39,10 @@ export default class GameApi {
 		})
 	}
 	// 获取活动公告
-	getNotice() {
+	getNotice(page, pageSize) {
 		return new Promise((resolve, reject) => {
 			uni.request({
-				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=getGameActivity`,
+				url: `${this.commonUrl}/index.php?g=Game&m=GameCenterGame&a=getNotice&page=${page}&pageSize=${pageSize}`,
 				method: 'GET',
 				success: (res) => {
 					resolve(res.data)
@@ -91,7 +91,7 @@ export default class GameApi {
 	getNoticeInfo(id) {
 		return new Promise((resolve, reject) => {
 			uni.request({
-				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=getNoticeInfo&noticeId=${id}`,
+				url: `${this.commonUrl}/index.php?g=Game&m=GameCenterGame&a=getNoticeInfo&noticeId=${id}`,
 				method: 'GET',
 				success: (res) => {
 					resolve(res.data)
@@ -128,6 +128,18 @@ export default class GameApi {
 		return new Promise((resolve, reject) => {
 			uni.request({
 				url: `${this.commonUrl}/index.php?g=Game&m=GameInterface&a=getAllConfig`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
+	}
+	// 点击开始游戏记录游戏点击
+	onPlayGame(gameId) {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameCenterGame&a=onPlayGame&gameId=${gameId}`,
 				method: 'GET',
 				success: (res) => {
 					resolve(res.data)

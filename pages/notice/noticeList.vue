@@ -1,5 +1,7 @@
 <template>
-	<Notice :list="noticeList"/></Notice>
+	<scroll-view :scroll-y="true" @scrolltolower="onScrollGet" class="notice-scroll">
+		<Notice :list="noticeList"/></Notice>
+	</scroll-view>
 </template>
 
 <script>
@@ -13,20 +15,39 @@
 		},
 		data() {
 			return {
-				noticeList: []
+				noticeList: [],
+				page: 1, 
+				pageSize: 20,
 			}
 		},
 		methods: {
 			getNoticeList() {
-				this.$api.game.getNotice().then((res) => {
+				this.$api.game.getNotice(this.page, this.pageSize).then((res) => {
 					if(res.status === 1001) {
-						this.noticeList = res.data.placard
+						if(this.noticeList.length > 0) {
+							let notice = this.noticeList.concat(res.data)
+							this.noticeList = notice
+						}else {
+							this.noticeList = res.data
+						}
+					}else {
+						uni.showToast({
+							title: '暂无更多数据',
+							icon: 'none'
+						})
 					}
 				})
+			},
+			onScrollGet() {
+				this.page++
+				this.getNoticeList()
 			}
 		}
 	}
 </script>
 
 <style>
+	.notice-scroll {
+		height: 1300rpx;
+	}
 </style>

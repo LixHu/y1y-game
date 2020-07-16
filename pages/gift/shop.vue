@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderContent />
+		<HeaderContent :reload="realod" />
 		<view>
 			<view class="cu-list menu-avatar">
 				<view class="cu-item" v-for="(item, index) in giftList" :key="index">
@@ -67,6 +67,11 @@
 			}
 		},
 		methods: {
+			reload() {
+				uni.navigateBack({
+					delta: 0
+				})
+			},
 			getGiftList() {
 				this.$api.game.getGiftList().then((res) => {
 					this.giftList = res.data

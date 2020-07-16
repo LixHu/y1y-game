@@ -11,7 +11,7 @@
 			</view>
 		</view>
 		<view v-else>
-			<view class="cu-avatar xl round avatar-not-login">
+			<view class="cu-avatar xl round avatar-not-login" @click="handleLogin">
 				<view class="cu-tag badge bg-grey login-btn">点击登录</view>
 			</view>
 		</view>
@@ -42,6 +42,11 @@
 					if(res.status === 1001) {
 						this.setInfo(res.data)
 					} 
+				})
+			},
+			handleLogin() {
+				this.$api.user.removeCache().then((res) => {
+					this.$emit('reload');
 				})
 			}
 		}

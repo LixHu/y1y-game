@@ -62,8 +62,5 @@ export default {
 	.redtxt {
 		color: #ED1C24;
 	}
-	.content {
-		text-indent: 1rem;
-	}
 	
 </style>

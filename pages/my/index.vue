@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderContent/>
+		<HeaderContent :reload="reload"/>
 		<view class="grid col-4 manage-option">
 			<view class="option-item" @click="goToSafety">
 				<view class="cu-avatar round lg bg-red"><text class="cuIcon-warn"></text></view>
@@ -53,6 +53,11 @@
 			}
 		},
 		methods: {
+			reload() {
+				uni.navigateBack({
+					delta: 0
+				})
+			},
 			goToSafety() {
 				uni.showToast({
 					title: '功能暂未开放',

@@ -46,7 +46,7 @@
 		methods: {
 			reGift(id) {
 				this.$api.game.receiveGift(id).then((res) => {
-					this.giftCode = res.code
+					this.giftCode = res.giftCode
 					this.showModel = true
 				})
 			},

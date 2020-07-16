@@ -1,6 +1,6 @@
 <template>
 	<view class="bg-white">
-		<HeaderContent />
+		<HeaderContent :reload="reload" />
 		<view class="first-image">
 			<image src="https://kantuwan.cn/images/kf_top.png"></image>
 		</view>
@@ -39,6 +39,11 @@
 			}
 		},
 		methods: {
+			reload() {
+				uni.navigateBack({
+					delta: 0
+				})
+			},
 			getQrcode() {
 				this.$api.game.getQrCode().then((res) => {
 					if(res.status == 1001) {

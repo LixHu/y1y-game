@@ -85,7 +85,9 @@
 				})
 			},
 			goGame() {
-				window.location.href = `${this.$url}/Wap/App/game_new?channel=${ this.gameInfo.str }`
+				this.$api.game.onPlayGame(this.gameId).then((res) => {
+					window.location.href = `${this.$url}/Wap/App/game_new?channel=${ this.gameInfo.str }`
+				})
 				// uni.navigateTo({
 				// 	url: `playGame?channel=${ this.gameInfo.str }`,
 				// 	success() {

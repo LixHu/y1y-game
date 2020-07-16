@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderContent />
+		<HeaderContent :reload="reload" />
 		<view class="grid col-2 interger-conent">
 			<view class="interger" @click="setPageType('integer')">
 				<view>
@@ -82,6 +82,11 @@
 			}
 		},
 		methods: {
+			reload() {
+				uni.navigateBack({
+					delta: 0
+				})
+			},
 			getIntegerRecord(type) {
 				this.$api.user.getIntegerRecord(type, this.page, this.pageSize).then((res) => {
 					if(res.status == 1001) {

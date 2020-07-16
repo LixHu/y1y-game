@@ -721,4 +721,7 @@
 </script>
 
 <style>
+	.content {
+		text-indent: 1rem;
+	}
 </style>

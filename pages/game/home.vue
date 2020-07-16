@@ -25,16 +25,16 @@
 		<view class="index-navigate bg-white">
 			<view class="grid col-4 navigate-btns">
 				<view class="navigate-btn" @click="goGift()">
-					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-2.png);"></view>
+					<view style="background-image: url(//fx-rs.zamerp.com.cn/uploads/a/aystvz1594635206/d/0/4/6/5f0d7552c260c.png);"></view>
 				</view>
 				<view class="navigate-btn" @click="goShop()">
-					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-3.png);"></view>
+					<view style="background-image: url(//fx-rs.zamerp.com.cn/uploads/a/aystvz1594635206/2/b/1/1/5f0d75714032e.png);"></view>
 				</view>
 				<view class="navigate-btn" @click="showNotCan()">
-					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-4.png);"></view>
+					<view style="background-image: url(//fx-rs.zamerp.com.cn/uploads/a/aystvz1594635206/b/a/d/6/5f0d76c6a97f0.png);"></view>
 				</view>
 				<view class="navigate-btn" @click="showNotCan()">
-					<view style="background-image: url(https://y1y-game.oss-cn-shanghai.aliyuncs.com/index-1.png);"></view>
+					<view style="background-image: url(//fx-rs.zamerp.com.cn/uploads/a/aystvz1594635206/e/5/4/9/5f0d76db93ce8.png);"></view>
 				</view>
 			</view>
 		</view>
@@ -80,7 +80,7 @@
 		</view>
 		<view class="bg-white padding-30">
 			<view class="grid col-4 grid-square">
-				<view v-for="(item,index) in rencentGame" :key="index" class="game-icon" v-if="item.game" @click="goGameInfo(item.id)">
+				<view v-for="(item,index) in rencentGame" :key="index" class="game-icon" v-if="item.game" @click="goGameInfo(item.game.id)">
 					<image :src="item.game.icon" class="game-prefix" />
 					<view class="game-text">
 						<text>{{ item.game.game_name }}</text>
@@ -89,7 +89,7 @@
 			</view>
 		</view>
 		<!-- 热门推荐 -->
-		<view class="cu-bar bg-white  margin-top solid-bottom">
+		<view class="cu-bar bg-white margin-top solid-bottom">
 			<view class="action card-title">
 				热门推荐
 			</view>
@@ -135,7 +135,9 @@
 				<text class="cuIcon-more"></text>
 			</view>
 		</view>
-		<Notice :list="noticeList" />
+		<scroll-view class="notice-content" @scrolltolower="getScrollNotice" :scroll-y="true">
+			<Notice :list="noticeList" />
+		</scroll-view>
 	</view>
 </template>
 
@@ -163,6 +165,8 @@
 				TabCur: 0,
 				dotStyle: false,
 				mode: 'round',
+				noticePage: 1,
+				noticePageSize: 10,
 			}
 		},
 		methods: {
@@ -210,11 +214,26 @@
 				})
 			},
 			getNotice() {
-				this.$api.game.getNotice().then((res) => {
+				
+				this.$api.game.getNotice(this.noticePage, this.noticePageSize).then((res) => {
 					if(res.status == 1001) {
-						this.noticeList = res.data.placard
+						if(this.noticeList.length > 0) {
+							let notice = this.noticeList.concat(res.data)
+							this.noticeList = notice
+						}else {
+							this.noticeList = res.data
+						}
+					}else {
+						uni.showToast({
+							title: '暂无更多内容',
+							icon: 'none'
+						})
 					}
 				})
+			},
+			getScrollNotice() {
+				this.noticePage++
+				this.getNotice()
 			},
 			goGameInfo(id) {
 				uni.navigateTo({
@@ -311,7 +330,7 @@
 	
 	.index-navigate {
 		margin: 0 auto;
-		padding: 10rpx 100rpx 0 100rpx;
+		padding: 10rpx 60rpx 0 60rpx;
 	}
 	
 	.game-icon {
@@ -327,7 +346,7 @@
 	}
 	.navigate-btn {
 		width: 100%;
-		height: 120rpx;
+		height: 140rpx;
 	}
 	.padding-30 {
 		padding: 0 30rpx;
@@ -344,5 +363,9 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
+	}
+	
+	.notice-content {
+		height: 800rpx;
 	}
 </style>

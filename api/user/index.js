@@ -63,4 +63,16 @@ export default class UserApi {
 			})
 		})
 	}
+	// 删除缓存，退出登录
+	removeCache() {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: `${this.commonUrl}/index.php?g=Game&m=GameCenterUser&a=removeCache`,
+				method: 'GET',
+				success: (res) => {
+					resolve(res.data)
+				}
+			})
+		})
+	}
 }

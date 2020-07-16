@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<HeaderContent />
+		<HeaderContent @reload="reload" />
 		<view class="grid col-2 interger-conent">
 			<view class="interger" @click="goIntegerInfo">
 				<view>
@@ -30,9 +30,9 @@
 						<view class="day-desc">
 							<text class="day-integer text-black">积分{{ item.integer }}</text>
 							<text class="day-num text-red">第{{ item.day }}天</text>
-							<view class="is-sign-in" v-if="index < userInfo.signdays">
-								<text class="text-white">已经签到</text>
-							</view>
+						</view>
+						<view class="is-sign-in" v-if="index < userInfo.signdays">
+							<text class="text-white">已经签到</text>
 						</view>
 					</view>
 				</view>
@@ -104,6 +104,11 @@
 			...mapMutations([
 				'setInfo'
 			]),
+			reload() {
+				uni.navigateBack({
+					delta: 0
+				})
+			},
 			getSignList() {
 				this.$api.user.getSignList().then((res) => {
 					if(res.status === 1001) {
@@ -146,7 +151,7 @@
 	.sign-in-desc {
 		background-color: #FFFFFF;
 	}
-	.sign-in-desc > view{
+	.sign-in-desc > .day-desc{
 		background-image: url(../../static/sign/sign-in.jpg);
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
@@ -224,12 +229,12 @@
 	}
 	
 	.is-sign-in {
-		width: 140%;
-		height: 130%;
-		background-color: rgba(0,0,0,0.4);
+		width: 80%;
+		height: 69%;
 		position: relative;
-		bottom: 80px;
-		right: 20rpx;
+		bottom: 180rpx;
+		left: 20rpx;
+		background-color: rgba(0,0,0, 0.4);
 		text-align: center;
 	}
 	.is-sign-in > text {
